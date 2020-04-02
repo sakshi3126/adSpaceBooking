@@ -1,42 +1,51 @@
-<%= form_with(model: slot, local: true) do |form| %>
-  <% if slot.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(slot.errors.count, "error") %> prohibited this slot from being saved:</h2>
-
-      <ul>
-      <% slot.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div class="container">
+  <div class="form-row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <%= simple_form_for(@slot, local: true) do |f| %>
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <%= f.label :title, class: "control-label" %>
+              <%= f.text_field :title, class: "form-control" %>
+            </div>
+            <div class="col-sm-10">
+            <div class="form-group">
+              <div class='input-group date' id='datetimepicker8'>
+              <%= f.text_field :start_at, class: "form-control", as: :string %>
+              <span class="input-group-addon">
+                    <span class="fa fa-calendar">
+                    </span>
+                </span>
+              </div>
+            </div>
+            </div>
+            <div class="form-group">
+              <%= f.input :end_at, :order => [:month, :day, :year], class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :Status, class: "control-label" %>
+              <%= f.select :status, Slot.statuses.keys, {}, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="form-group text-center">
+              <%= f.hidden_field :user_id, value: @user.id %>
+              <%= f.submit class: "btn btn-primary btn-block mb-2" %>
+            </div>
+            <div class="form-group text-center">
+              <%= link_to 'Back', slots_path, class: 'btn btn-primary btn-block mb-2' %>
+            </div>
+          </div>
+        </div>
       <% end %>
-      </ul>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :start_at %>
-    <%= form.datetime_select :start_at %>
-  </div>
-
-  <div class="field">
-    <%= form.label :end_at %>
-    <%= form.datetime_select :end_at %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.number_field :status %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+<!--<script type="text/javascript">-->
+<!--    $(document).on('turbolinks:load', function(){-->
+<!--        console.log("sakshi")-->
+<!--        console.log($('#datetimepicker8'))-->
+<!--        $('#datetimepicker8').datetimepicker();-->
+<!--    });-->
+<!--</script>-->

@@ -45,10 +45,39 @@ a:hover, a:active, a:link, a:visited {
   background-color: $navbarColor;
   color: white !important;
 }
-.container {
-  padding: 0;
+
+.card {
+  .card-overlay {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.75);
+    justify-content: center;
+    align-items: center;
+  }
+  .card-body {
+    img {
+      max-width: 100%;
+    }
+    .card-alternative {
+      background-color: #f7f7f7;
+    }
+  }
+}
+.form-row{
+  width: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
 }
 
-.row {
-  margin: 0;
+
+.bootstrap-datetimepicker-widget.dropdown {
+  background: white !important;
 }
+

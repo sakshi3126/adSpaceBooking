@@ -38,6 +38,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'jquery-rails'
 gem 'bootstrap_form'
+gem 'bootstrap-datetimepicker-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -67,3 +68,4 @@ gem 'devise'
 gem 'faker'
 gem 'will_paginate', '~> 3.1.0'
 gem 'pry'
+gem 'simple_form'

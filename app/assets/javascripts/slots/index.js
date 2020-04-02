@@ -44,7 +44,13 @@ function randomColorSet() {
 }
 
 // Randomly returns a color from an array of colors
+
 function randomColor() {
     var color = colorSet[Math.floor(Math.random() * colorSet.length)];
     return color;
 }
+$(document).on('turbolinks:load', function() {
+    $('#slot_start_at').datetimepicker();
+
+
+});
