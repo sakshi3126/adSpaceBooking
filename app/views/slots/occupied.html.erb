@@ -3,27 +3,27 @@
     <div id="side-menu" class="col-sm-2">
       <ul id="links-list">
         <li id="hobby">
-          <%= link_to hobby_slots_path do %>
-          <i class="fa fa-user-circle-o" aria-hidden="true"></i> Booked Slot
+          <%= link_to occupied_slots_path do %>
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i> Booked Slot
           <% end %>
         </li>
 
         <li id="study">
-          <%= link_to study_slots_path do %>
-          <i class="fa fa-graduation-cap" aria-hidden="true"></i> Free Slot
+          <%= link_to free_slots_path do %>
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i> Free Slot
           <% end %>
         </li>
 
         <li id="team">
-          <%= link_to team_slots_path do %>
-          <i class="fa fa-users" aria-hidden="true"></i> Pre Book Slot
+          <%= link_to booked_slots_path do %>
+            <i class="fa fa-users" aria-hidden="true"></i> Pre Book Slot
           <% end %>
         </li>
       </ul>
     </div><!-- side-menu -->
-
+    <h3 class="page-name">Occupied Slot</h3>
     <div id="main-content" class="col-sm-10">
-      <% @slots.each do |slot| %>
+      <% @free_slot.each do |slot| %>
         <div class="col-sm-3 single-post-card" id=<%= slot_path(slot.id) %>>
           <div class="card">
             <div class="card-block">
@@ -33,6 +33,7 @@
               <div class="post-content">
                 <div class="posted-by">Posted by <%= slot.user.name %></div>
                 <h3><%= slot.title %></h3>
+                <h3><%= slot.status %></h3>
                 <p>start at:<%= slot.start_at %></p>
                 <p>end at:<%= slot.end_at %></p>
                 <%= link_to "I'm interested", slot_path(slot.id), class: 'interested' %>
@@ -41,8 +42,6 @@
           </div><!-- card -->
         </div><!-- col-sm-3 -->
       <% end %>
-
-    </div><!-- main-content -->
-
-  </div><!-- row -->
-</div><!-- container -->
+    </div>
+  </div>
+</div>

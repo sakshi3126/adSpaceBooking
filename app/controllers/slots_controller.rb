@@ -4,7 +4,10 @@ class SlotsController < ApplicationController
   # GET /slots
   # GET /slots.json
   def index
-    @slots = Slot.all
+    @slots = Slot.limit(10)
+    @hobby_slots = Slot.by_branch('Free Slot').limit(8)
+    @study_slots = Slot.by_branch('Pre Booked Slot').limit(8)
+    @team_slots = Slot.by_branch('Occupied Slot').limit(8)
   end
 
   # GET /slots/1
@@ -61,11 +64,30 @@ class SlotsController < ApplicationController
     end
   end
 
+  def occupied
+    @free_slot = Slot.where(status: 'Occupied Slot')
+  end
+
+  def free
+    @free_slot = Slot.where(status: 'Free Slot')
+  end
+
+  def booked
+    @free_slot = Slot.where(status: 'Pre Booked Slot')
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_slot
       @slot = Slot.find(params[:id])
     end
+    # def slots_for_branch(status)
+    #   @status = Slot.where(status: status)
+    #   # @slots = get_slots.paginate(page: params[:page])
+    # end
+    # def get_slots
+    #   Slot.limit(30)
+    # end
 
     # Only allow a list of trusted parameters through.
     def slot_params

@@ -1,29 +1,9 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @slot.title %>
-</p>
-
-<p>
-  <strong>Start at:</strong>
-  <%= @slot.start_at %>
-</p>
-
-<p>
-  <strong>End at:</strong>
-  <%= @slot.end_at %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @slot.status %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @slot.user %>
-</p>
-
-<%= link_to 'Edit', edit_slot_path(@slot) %> |
-<%= link_to 'Back', slots_path %>
+<div id="single-post-content" class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="posted-by">Posted by <%= @slot.user.name %></div>
+      <h3><%= @slot.title %></h3>
+      <p><%= @slot.start_at %></p>
+    </div>
+  </div><!-- row -->
+</div>

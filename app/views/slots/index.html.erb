@@ -1,35 +1,52 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <div id="side-menu" class="col-sm-2">
+      <ul id="links-list">
+        <li id="hobby">
+          <%= link_to occupied_slots_path do %>
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i> Booked Slot
+          <% end %>
+        </li>
 
-<h1>Slots</h1>
+        <li id="study">
+          <%= link_to free_slots_path do %>
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i> Free Slot
+          <% end %>
+        </li>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Start at</th>
-      <th>End at</th>
-      <th>Status</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+        <li id="team">
+          <%= link_to booked_slots_path do %>
+            <i class="fa fa-users" aria-hidden="true"></i> Pre Book Slot
+          <% end %>
+        </li>
+      </ul>
+    </div><!-- side-menu -->
 
-  <tbody>
-    <% @slots.each do |slot| %>
-      <tr>
-        <td><%= slot.title %></td>
-        <td><%= slot.start_at %></td>
-        <td><%= slot.end_at %></td>
-        <td><%= slot.status %></td>
-        <td><%= slot.user %></td>
-        <td><%= link_to 'Show', slot %></td>
-        <td><%= link_to 'Edit', edit_slot_path(slot) %></td>
-        <td><%= link_to 'Destroy', slot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div id="main-content" class="col-sm-10">
+      <% @slots.each do |slot| %>
+        <div class="col-sm-3 single-post-card" id=<%= slot_path(slot.id) %>>
+          <div class="card">
+            <div class="card-block">
+              <h4 class="post-text">
+                <%= truncate(slot.title, :length => 60) %>
+              </h4>
+              <div class="post-content">
+                <div class="posted-by">Posted by <%= slot.user.name %></div>
+                <h3><%= slot.title %></h3>
+                <h3><%= slot.status %></h3>
+                <p>start at:<%= slot.start_at %></p>
+                <p>end at:<%= slot.end_at %></p>
+                <%= link_to "I'm interested", slot_path(slot.id), class: 'interested' %>
+              </div>
+            </div>
+          </div><!-- card -->
+        </div><!-- col-sm-3 -->
+      <% end %>
+    </div><!-- main_content -->
 
-<br>
+  </div><!-- row -->
+</div><!-- container -->
 
-<%= link_to 'New Slot', new_slot_path %>
+
+<!--<td><%#= link_to 'Edit', edit_slot_path(slot) %></td>-->
+<!--<td><%#= link_to 'Destroy', slot, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
