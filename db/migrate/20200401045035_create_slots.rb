@@ -4,7 +4,7 @@ class CreateSlots < ActiveRecord::Migration[5.2]
       t.string :title
       t.datetime :start_at
       t.datetime :end_at
-      t.integer :status
+      t.string :status
       t.references :user, foreign_key: true
 
       t.timestamps

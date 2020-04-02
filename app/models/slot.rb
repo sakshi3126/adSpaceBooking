@@ -1,3 +1,4 @@
+include DisplayHelper
 class Slot < ApplicationRecord
   belongs_to :user
   has_many :bids, dependent: :destroy
@@ -7,8 +8,8 @@ class Slot < ApplicationRecord
   end
 
   enum statuses: {
-      'Free Slot': 1,
-      'Pre Booked Slot': 2,
-      'Occupied Slot': 3
+      'Free Slot': 0,
+      'Pre Booked Slot': 1,
+      'Occupied Slot': 2
   }
 end

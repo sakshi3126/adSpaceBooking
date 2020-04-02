@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       get 'free'
       get 'booked'
     end
+    member do
+      get 'status_wise_button'
+    end
   end
   devise_for :users, :controllers => {:registrations => "registrations"}
 

@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_045413) do
 
   create_table "bids", force: :cascade do |t|
     t.integer "amount"
-    t.integer "status"
+    t.string "status"
     t.bigint "user_id"
     t.bigint "slot_id"
     t.datetime "created_at", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_045413) do
     t.string "title"
     t.datetime "start_at"
     t.datetime "end_at"
-    t.integer "status"
+    t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

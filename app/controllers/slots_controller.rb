@@ -1,13 +1,15 @@
 class SlotsController < ApplicationController
-  before_action :set_slot, only: [:show, :edit, :update, :destroy]
+  before_action :set_slot, only: [:show, :edit, :update, :destroy, :status_wise_button]
 
   # GET /slots
   # GET /slots.json
   def index
-    @slots = Slot.limit(10)
-    @hobby_slots = Slot.by_branch('Free Slot').limit(8)
-    @study_slots = Slot.by_branch('Pre Booked Slot').limit(8)
-    @team_slots = Slot.by_branch('Occupied Slot').limit(8)
+    if current_user.role == "Space Provider" || current_user.role == "Organisation"
+      @slots = Slot.all.order(created_at: :DESC)
+    else
+      current_user.role == "Space Agent"
+      @slots = Slot.where(status: "Free Slot").order(created_at: :DESC)
+    end
   end
 
   # GET /slots/1
@@ -28,6 +30,7 @@ class SlotsController < ApplicationController
   # POST /slots.json
   def create
     @slot = Slot.new(slot_params)
+    binding.pry
 
     respond_to do |format|
       if @slot.save
@@ -65,7 +68,11 @@ class SlotsController < ApplicationController
   end
 
   def occupied
-    @free_slot = Slot.where(status: 'Occupied Slot')
+    if current_user.role == "Space Agent"
+      @free_slot = current_user.slots.where(status: 'Occupied Slot')
+    else
+      @free_slot = Slot.where(status: 'Occupied Slot')
+    end
   end
 
   def free
@@ -73,24 +80,36 @@ class SlotsController < ApplicationController
   end
 
   def booked
-    @free_slot = Slot.where(status: 'Pre Booked Slot')
+    if current_user.role == "Space Agent"
+      @free_slot = current_user.slots.where(status: 'Pre Booked Slot')
+    else
+      @free_slot = Slot.where(status: 'Pre Booked Slot')
+    end
+  end
+
+  def status_wise_button
+    respond_to do |format|
+      format.html { render partial: 'status_wise_button' }
+    end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_slot
-      @slot = Slot.find(params[:id])
-    end
-    # def slots_for_branch(status)
-    #   @status = Slot.where(status: status)
-    #   # @slots = get_slots.paginate(page: params[:page])
-    # end
-    # def get_slots
-    #   Slot.limit(30)
-    # end
 
-    # Only allow a list of trusted parameters through.
-    def slot_params
-      params.require(:slot).permit(:title, :start_at, :end_at, :status, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_slot
+    @slot = Slot.find(params[:id])
+  end
+
+  # def slots_for_branch(status)
+  #   @status = Slot.where(status: status)
+  #   # @slots = get_slots.paginate(page: params[:page])
+  # end
+  # def get_slots
+  #   Slot.limit(30)
+  # end
+
+  # Only allow a list of trusted parameters through.
+  def slot_params
+    params.require(:slot).permit(:title, :start_at, :end_at, :status, :user_id)
+  end
 end

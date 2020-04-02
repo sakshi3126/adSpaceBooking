@@ -4,19 +4,26 @@
       <ul id="links-list">
         <li id="hobby">
           <%= link_to occupied_slots_path do %>
-            <i class="fa fa-user-circle-o" aria-hidden="true"></i> Booked Slot
+            <i class="fa fa-book" aria-hidden="true"></i> Booked Slot
           <% end %>
         </li>
 
         <li id="study">
           <%= link_to free_slots_path do %>
-            <i class="fa fa-graduation-cap" aria-hidden="true"></i> Free Slot
+            <i class="fa fa-binoculars" aria-hidden="true"></i> Free Slot
           <% end %>
         </li>
 
         <li id="team">
           <%= link_to booked_slots_path do %>
             <i class="fa fa-users" aria-hidden="true"></i> Pre Book Slot
+          <% end %>
+        </li>
+        <li>
+          <% if current_user == "Space Provider" %>
+            <%= link_to new_slot_path do %>
+              <i class="fa fa-cart-plus" aria-hidden="true"></i> Create Slot
+            <% end %>
           <% end %>
         </li>
       </ul>
@@ -32,11 +39,19 @@
               </h4>
               <div class="post-content">
                 <div class="posted-by">Posted by <%= slot.user.name %></div>
-                <h3><%= slot.title %></h3>
-                <h3><%= slot.status %></h3>
-                <p>start at:<%= slot.start_at %></p>
-                <p>end at:<%= slot.end_at %></p>
-                <%= link_to "I'm interested", slot_path(slot.id), class: 'interested' %>
+                <h4><%= slot.title %></h4>
+                <strong>Status:- </strong><span><em><%= slot.status %></em></span>
+                <p>start at:<%= format_date_with_time(slot.start_at) %></p>
+                <p>end at:<%= format_date_with_time(slot.end_at) %></p>
+                <div class="text-center" style="margin-top: 35px;">
+                  <% if current_user.role == "Organisation" && slot.status == "Pre Booked Slot" %>
+                    <%= link_to "Bid Slot", slot_path(slot.id), class: 'btn btn-primary' %>
+                  <% elsif (current_user.role == "Organisation" || current_user.role == "Space Agent") && slot.status == "Free Slot" %>
+                    <%= link_to "Book Slot", slot_path(slot.id), class: 'btn btn-primary' %>
+                  <% else %>
+
+                  <% end %>
+                </div>
               </div>
             </div>
           </div><!-- card -->
