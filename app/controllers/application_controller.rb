@@ -20,4 +20,20 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     request.env['omniauth.origin'] || root_path
   end
+
+  def flash_message(object, action)
+    class_name = object.class.name.titleize
+    case action.to_sym
+    when :create
+      "#{class_name} has been successfully created."
+    when :update
+      "#{class_name} has been successfully updated."
+    when :destroy
+      "#{class_name} has been successfully destroyed."
+    when :confirm_booking
+      "#{class_name} has been successfully Booked"
+    else
+      "#{class_name} has been successfully changed."
+    end
+  end
 end

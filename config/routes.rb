@@ -28,6 +28,9 @@ Rails.application.routes.draw do
     end
     member do
       get 'status_wise_button'
+      get 'confirm_booking'
+      get 'approval'
+      get 'rejection'
     end
   end
 

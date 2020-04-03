@@ -16,8 +16,10 @@ class Slot < ApplicationRecord
       'Free Slot': 0,
       'Pre Booked Slot': 1,
       'Occupied Slot': 2,
-      'Bid Approval Pending': 3
+      'Bid Approval Pending': 3,
+      'Cancelled': 4
   }
+
 
   # def start_at_uniq?
   #   if !id.present?

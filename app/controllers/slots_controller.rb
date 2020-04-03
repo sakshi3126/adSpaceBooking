@@ -1,5 +1,5 @@
 class SlotsController < ApplicationController
-  before_action :set_slot, only: [:show, :edit, :update, :destroy, :status_wise_button]
+  before_action :set_slot, only: [:show, :edit, :update, :destroy, :confirm_booking, :approval, :rejection]
 
   # GET /slots
   # GET /slots.json
@@ -8,7 +8,7 @@ class SlotsController < ApplicationController
       @slots = Slot.all.order(created_at: :DESC)
     else
       current_user.role == "Space Agent"
-      @slots = Slot.where(status: "Free Slot").order(created_at: :DESC)
+      @slots = Slot.where(status: ["Free Slot", 'Bid Approval Pending']).order(created_at: :DESC)
     end
   end
 
@@ -67,6 +67,30 @@ class SlotsController < ApplicationController
     end
   end
 
+  def confirm_booking
+    if @slot.present? && @slot.status == "Free Slot"
+      @slot.update_attributes(status: "Occupied Slot", user_id: current_user.id)
+    end
+    redirect_to slots_path, notice: flash_message(@slot, action_name)
+  end
+
+
+  def approval
+    if @slot.present?
+      @slot.update_attributes(status: "Occupied Slot", user_id: current_user.id)
+      @slot.bid.update_attributes(status: "Approved") if @slot.bid.present?
+    end
+    redirect_to slots_path, notice: flash_message(@slot, action_name)
+  end
+
+  def rejection
+    if @slot.present?
+      @slot.update_attributes(status: "Cancelled", user_id: current_user.id)
+      @slot.bid.update_attributes(status: "Rejected") if @slot.bid.present?
+    end
+    redirect_to slots_path, notice: flash_message(@slot, action_name)
+  end
+
   def occupied
     if current_user.role == "Space Agent"
       @free_slot = current_user.slots.where(status: 'Occupied Slot')
@@ -101,6 +125,6 @@ class SlotsController < ApplicationController
   end
 
   def slot_params
-    params.require(:slot).permit(:title, :start_at, :end_at, :status, :user_id, :bid_by)
+    params.require(:slot).permit(:title, :start_at, :end_at, :status, :user_id,)
   end
 end

@@ -1,4 +1,6 @@
 $(document).on('turbolinks:load', function() {
+    $("#successMessage").delay(5000).slideUp(300);
+
     if ($(".single-post-card").length) {
         // set a solid background color style
         if (mode == 1) {

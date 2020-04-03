@@ -21,8 +21,8 @@
         </li>
       </ul>
     </div><!-- side-menu -->
-    <h3 class="page-name">Pre Book Slot</h3>
     <div id="main-content" class="col-sm-10">
+      <h3 class="page-name">Pre Book Slot</h3>
       <% @free_slot.each do |slot| %>
         <div class="col-sm-3 single-post-card" id=<%= slot_path(slot.id) %>>
           <div class="card">
@@ -39,9 +39,11 @@
                 <strong>start at:</strong><span><em><%= format_date_with_time(slot.end_at) %></em></span><br>
                 <div class="text-center" style="">
                   <% if current_user.role == "Organisation" && slot.status == "Pre Booked Slot" %>
-                    <%= link_to "Bid Slot", slot_path(slot.id), class: 'btn btn-primary' %>
+                    <%= link_to "Bid Slot", new_bid_path(slot_id: slot.id), class: 'btn btn-primary' %>
                   <% elsif (current_user.role == "Organisation" || current_user.role == "Space Agent") && slot.status == "Free Slot" %>
-                    <%= link_to "Book Slot", slot_path(slot.id), class: 'btn btn-primary' %>
+                    <%= link_to "Book Slot", confirm_booking_slot_path(id: slot.id), class: 'btn btn-primary' %>
+                  <%elsif (current_user.role == "Space Agent" && slot.status == 'Bid Approval Pending') %>
+                    <%= link_to "Approve", slot_path(slot.id), class: 'btn btn-info' %>
                   <% else %>
 
                   <% end %>
