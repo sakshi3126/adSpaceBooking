@@ -100,16 +100,7 @@ class SlotsController < ApplicationController
     @slot = Slot.find(params[:id])
   end
 
-  # def slots_for_branch(status)
-  #   @status = Slot.where(status: status)
-  #   # @slots = get_slots.paginate(page: params[:page])
-  # end
-  # def get_slots
-  #   Slot.limit(30)
-  # end
-
-  # Only allow a list of trusted parameters through.
   def slot_params
-    params.require(:slot).permit(:title, :start_at, :end_at, :status, :user_id)
+    params.require(:slot).permit(:title, :start_at, :end_at, :status, :user_id, :bid_by)
   end
 end

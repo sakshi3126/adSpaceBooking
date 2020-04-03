@@ -15,7 +15,8 @@ class Slot < ApplicationRecord
   enum statuses: {
       'Free Slot': 0,
       'Pre Booked Slot': 1,
-      'Occupied Slot': 2
+      'Occupied Slot': 2,
+      'Bid Approval Pending': 3
   }
 
   # def start_at_uniq?
@@ -51,6 +52,20 @@ class Slot < ApplicationRecord
           errors.add(:end_at, "#{end_at.strftime('%d-%b-%Y, %H %p')} already exists.")
         end
       end
+    end
+  end
+
+  def total_time_in_hour
+    start_at = self.start_at
+    end_at = self.end_at
+    total_time = (end_at - start_at) / 1.hour
+  end
+
+  def total_amount
+    if self.total_time_in_hour != 0
+      total_amount = (self.total_time_in_hour * 1000).round(2)
+    else
+      total_amount = 500
     end
   end
 end

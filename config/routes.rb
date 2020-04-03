@@ -1,14 +1,4 @@
 Rails.application.routes.draw do
-  resources :slots do
-    collection do
-      get 'occupied'
-      get 'free'
-      get 'booked'
-    end
-    member do
-      get 'status_wise_button'
-    end
-  end
   devise_for :users, :controllers => {:registrations => "registrations"}
 
   devise_scope :user do
@@ -26,5 +16,20 @@ Rails.application.routes.draw do
     end
   end
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # get 'bids/index'
+  # get 'bids/show'
+  # get 'bids/new'
+  # get 'bids/edit'
+  resources :slots do
+    collection do
+      get 'occupied'
+      get 'free'
+      get 'booked'
+    end
+    member do
+      get 'status_wise_button'
+    end
+  end
+
+  resources :bids
 end

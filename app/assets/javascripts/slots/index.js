@@ -49,16 +49,16 @@ function randomColor() {
     var color = colorSet[Math.floor(Math.random() * colorSet.length)];
     return color;
 }
-$(document).on('turbolinks:load', function() {
-    $('#slot_start_at').daterangepicker({
-        timePicker: true,
-        locale: {
-            format: 'MM/DD/YYYY h:mm A'
-        },
-        singleDatePicker: true,
-        showDropdowns: true,
-        drops: "down",
-        minDate: '01/01/2012',
-        maxDate: '12/31/2017'
-    });
-});
+// $(document).on('turbolinks:load', function() {
+//     $('#slot_start_at').daterangepicker({
+//         timePicker: true,
+//         locale: {
+//             format: 'MM/DD/YYYY h:mm A'
+//         },
+//         singleDatePicker: true,
+//         showDropdowns: true,
+//         drops: "down",
+//         minDate: '01/01/2012',
+//         maxDate: '12/31/2017'
+//     });
+// });

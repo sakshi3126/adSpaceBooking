@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_01_045413) do
+ActiveRecord::Schema.define(version: 2020_04_03_155552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_045413) do
     t.bigint "slot_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "bid_by"
     t.index ["slot_id"], name: "index_bids_on_slot_id"
     t.index ["user_id"], name: "index_bids_on_user_id"
   end

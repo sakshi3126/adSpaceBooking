@@ -40,14 +40,17 @@
               <div class="post-content">
                 <div class="posted-by">Posted by <%= slot.user.name %></div>
                 <h4><%= slot.title %></h4>
-                <strong>Status:- </strong><span><em><%= slot.status %></em></span>
-                <p>start at:<%= format_date_with_time(slot.start_at) %></p>
-                <p>end at:<%= format_date_with_time(slot.end_at) %></p>
+                <strong>Status:- </strong><span><em><%= slot.status %></em></span><br>
+                <strong>Amount:- </strong><span><em><%= slot.total_amount %></em></span><br>
+                <strong>start at:</strong><span><em><%= format_date_with_time(slot.start_at) %></em></span><br>
+                <strong>start at:</strong><span><em><%= format_date_with_time(slot.end_at) %></em></span><br>
                 <div class="text-center" style="margin-top: 35px;">
                   <% if current_user.role == "Organisation" && slot.status == "Pre Booked Slot" %>
-                    <%= link_to "Bid Slot", slot_path(slot.id), class: 'btn btn-primary' %>
+                    <%= link_to "Bid Slot", new_bid_path(slot_id: slot.id), class: 'btn btn-primary' %>
                   <% elsif (current_user.role == "Organisation" || current_user.role == "Space Agent") && slot.status == "Free Slot" %>
-                    <%= link_to "Book Slot", slot_path(slot.id), class: 'btn btn-primary' %>
+                    <%= link_to "Book Slot", edit_slot_path(slot.id), class: 'btn btn-primary' %>
+                    <%elsif (current_user.role == "Space Agent" && slot.status == 'Bid Approval Pending') %>
+                    <%= link_to "Approve", slot_path(slot.id), class: 'btn btn-info' %>
                   <% else %>
 
                   <% end %>
