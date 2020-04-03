@@ -33,10 +33,18 @@
               <div class="post-content">
                 <div class="posted-by">Posted by <%= slot.user.name %></div>
                 <h3><%= slot.title %></h3>
-                <h3><%= slot.status %></h3>
-                <p>start at:<%= slot.start_at %></p>
-                <p>end at:<%= slot.end_at %></p>
-                <%= link_to "I'm interested", slot_path(slot.id), class: 'interested' %>
+                <strong>Status:- </strong><span><em><%= slot.status %></em></span>
+                <p>start at:<%= format_date_with_time(slot.start_at) %></p>
+                <p>end at:<%= format_date_with_time(slot.end_at) %></p>
+                <div class="text-center" style="margin-top: 15px;">
+                  <% if current_user.role == "Organisation" && slot.status == "Pre Booked Slot" %>
+                    <%= link_to "Bid Slot", slot_path(slot.id), class: 'btn btn-primary' %>
+                  <% elsif (current_user.role == "Organisation" || current_user.role == "Space Agent") && slot.status == "Free Slot" %>
+                    <%= link_to "Book Slot", slot_path(slot.id), class: 'btn btn-primary' %>
+                  <% else %>
+
+                  <% end %>
+                </div>
               </div>
             </div>
           </div><!-- card -->

@@ -1,15 +1,56 @@
 include DisplayHelper
 class Slot < ApplicationRecord
   belongs_to :user
-  has_many :bids, dependent: :destroy
+  has_one :bid, dependent: :destroy
 
-  scope :by_branch, -> (status) do
-    joins(:user).where(status: status)
-  end
+  validates_presence_of :title
+  validates_presence_of :status
+  validates_presence_of :user
+  validates_uniqueness_of :start_at
+  validates_uniqueness_of :end_at, on: :update, allow_nil: true
+
+  validate :start_at_uniq?
+  validate :end_at_uniq?
 
   enum statuses: {
       'Free Slot': 0,
       'Pre Booked Slot': 1,
       'Occupied Slot': 2
   }
+
+  # def start_at_uniq?
+  #   if !id.present?
+  #     date_uniq = Slot.all.pluck(:start_at)
+  #     if date_uniq.include?(start_at)
+  #       errors.add(:start_at, "#{start_at} already exists.")
+  #     end
+  #   end
+  # end
+
+  def start_at_uniq?
+    if !id.present?
+      date_uniq = Slot.all.pluck(:start_at)
+      date_uniq.each do |date|
+        date = date.strftime('%d-%b-%Y, %H')
+        if (date == start_at.strftime('%d-%b-%Y, %H'))
+          errors.add(:start_at, "#{start_at.strftime('%d-%b-%Y, %H %p')} already exists.")
+        elsif ((start_at.strftime('%d-%b-%Y, %H') == end_at.strftime('%d-%b-%Y, %H')))
+          errors.add(:start_at, "#{start_at.strftime('%d-%b-%Y, %H %p')} can not be same as end at.")
+        else
+        end
+      end
+    end
+  end
+
+  def end_at_uniq?
+    if !id.present?
+      date_uniq = Slot.all.pluck(:end_at)
+      date_uniq.each do |date|
+        date = date.strftime('%d-%b-%Y, %H')
+        if (date == end_at.strftime('%d-%b-%Y, %H'))
+          errors.add(:end_at, "#{end_at.strftime('%d-%b-%Y, %H %p')} already exists.")
+        end
+      end
+    end
+  end
 end

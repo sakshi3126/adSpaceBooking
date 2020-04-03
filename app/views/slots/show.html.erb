@@ -12,11 +12,11 @@
       </div>
       <div class="col-sm-2">
         <strong>Start At:</strong>
-        <p><%=format_date_with_time(@slot.start_at) %></p>
+        <p><%=format_date_time_meridiem(@slot.start_at) %></p>
       </div>
       <div class="col-sm-2">
         <strong>End At:</strong>
-        <p><%= format_date_with_time(@slot.end_at) %></p>
+        <p><%= format_date_time_meridiem(@slot.end_at) %></p>
       </div>
     </div>
   </div><!-- row -->

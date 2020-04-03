@@ -30,12 +30,12 @@ class SlotsController < ApplicationController
   # POST /slots.json
   def create
     @slot = Slot.new(slot_params)
-    binding.pry
 
     respond_to do |format|
-      if @slot.save
+      if @slot.valid?
         format.html { redirect_to @slot, notice: 'Slot was successfully created.' }
         format.json { render :show, status: :created, location: @slot }
+        @slot.save
       else
         format.html { render :new }
         format.json { render json: @slot.errors, status: :unprocessable_entity }
