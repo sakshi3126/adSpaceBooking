@@ -26,6 +26,7 @@
             <% end %>
           <% end %>
         </li>
+        <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn-btn-info'%>
       </ul>
     </div><!-- side-menu -->
 
@@ -43,7 +44,7 @@
                 <strong>Status:- </strong><span><em><%= slot.status %></em></span><br>
                 <strong>Amount:- </strong><span><em><%= slot.total_amount %></em></span><br>
                 <strong>start at:</strong><span><em><%= format_date_time_meridiem(slot.start_at) %></em></span><br>
-                <strong>start at:</strong><span><em><%= format_date_time_meridiem(slot.end_at) %></em></span><br>
+                <strong>End at:</strong><span><em><%= format_date_time_meridiem(slot.end_at) %></em></span><br>
                 <div class="text-center" style="margin-top: 35px;">
                   <% if current_user.role == "Organisation" && slot.status == "Pre Booked Slot" %>
                     <%= link_to "Bid Slot", new_bid_path(slot_id: slot.id), class: 'btn btn-primary' %>

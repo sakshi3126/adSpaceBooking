@@ -68,7 +68,10 @@ class SlotsController < ApplicationController
   end
 
   def confirm_booking
-    if @slot.present? && @slot.status == "Free Slot"
+    if @slot.present? && @slot.status == "Free Slot" && current_user.role = "Space Agent"
+      @slot.update_attributes(status: "Pre Booked Slot", user_id: current_user.id)
+      UserMailer.notification_email(@user, @slot).deliver_now!
+    else
       @slot.update_attributes(status: "Occupied Slot", user_id: current_user.id)
       UserMailer.notification_email(@user, @slot).deliver_now!
     end
