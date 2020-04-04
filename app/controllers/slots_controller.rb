@@ -33,7 +33,7 @@ class SlotsController < ApplicationController
 
     respond_to do |format|
       if @slot.save
-        UserMailer.notification_email(@user).deliver
+        UserMailer.notification_email(@user).deliver_now!
         format.html { redirect_to @slot, notice: 'Slot was successfully created.' }
         format.json { render :show, status: :created, location: @slot }
         @slot.save
