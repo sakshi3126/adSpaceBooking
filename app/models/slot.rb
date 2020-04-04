@@ -6,8 +6,8 @@ class Slot < ApplicationRecord
   validates_presence_of :title
   validates_presence_of :status
   validates_presence_of :user
-  validates_uniqueness_of :start_at
-  validates_uniqueness_of :end_at, on: :update, allow_nil: true
+  validates_presence_of :start_at
+  validates_presence_of :end_at
 
   validate :start_at_uniq?
   validate :end_at_uniq?
@@ -37,8 +37,8 @@ class Slot < ApplicationRecord
         date = date.strftime('%d-%b-%Y, %H')
         if (date == start_at.strftime('%d-%b-%Y, %H'))
           errors.add(:start_at, "#{start_at.strftime('%d-%b-%Y, %H %p')} already exists.")
-        elsif ((start_at.strftime('%d-%b-%Y, %H') == end_at.strftime('%d-%b-%Y, %H')))
-          errors.add(:start_at, "#{start_at.strftime('%d-%b-%Y, %H %p')} can not be same as end at.")
+        elsif (end_at.strftime('%d-%b-%Y, %H') <= (start_at.strftime('%d-%b-%Y, %H') ))
+          errors.add(:start_at, "#{start_at.strftime('%d-%b-%Y, %H %p')} Can't be same  or greater than end at.")
         else
         end
       end

@@ -14,11 +14,11 @@
             </div>
             <div class="form-group">
               <%= f.label :start_at, class: "control-label" %>
-              <%= f.datetime_select :start_at, class: "form-control", as: :string %>
+              <%= f.datetime_select :start_at, start_year: Date.today.year,month: Date.today.month, class: "form-control", as: :string %>
             </div>
             <div class="form-group">
               <%= f.label :end_at, class: "control-label" %>
-              <%= f.datetime_select :end_at, class: "form-control" %>
+              <%= f.datetime_select :end_at , start_year: Date.today.year, month: Date.today.month, class: "form-control" %>
             </div>
             <div class="form-group">
               <%= f.label :Status, class: "control-label" %>
