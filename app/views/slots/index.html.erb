@@ -20,7 +20,7 @@
           <% end %>
         </li>
         <li>
-          <% if current_user == "Space Provider" %>
+          <% if current_user.role == "Space Provider" %>
             <%= link_to new_slot_path do %>
               <i class="fa fa-cart-plus" aria-hidden="true"></i> Create Slot
             <% end %>

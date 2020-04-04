@@ -32,7 +32,8 @@ class SlotsController < ApplicationController
     @slot = Slot.new(slot_params)
 
     respond_to do |format|
-      if @slot.valid?
+      if @slot.save
+        UserMailer.notification_email(@user).deliver
         format.html { redirect_to @slot, notice: 'Slot was successfully created.' }
         format.json { render :show, status: :created, location: @slot }
         @slot.save
