@@ -21,7 +21,8 @@ class BidsController < ApplicationController
   def create
     @bid = Bid.new(bid_params)
     respond_to do |format|
-      if @bid.valid?
+      if @bid.save
+        UserMailer.sent_for_approval(@user, @bid).deliver_now
         @bid.slot.update_attributes(status: 'Bid Approval Pending')
         format.html { redirect_to bid_path(@bid), notice: 'Slot was successfully created.' }
         format.json { render :show, status: :created, location: @bid }

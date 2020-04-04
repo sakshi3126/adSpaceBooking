@@ -7,4 +7,9 @@ class UserMailer < ApplicationMailer
     @bid = bid
     mail(to:@user.email, subject: 'Confirmation Mail from MyAdvertisementPortal')
   end
+  def sent_for_approval(user, bid)
+    @user= user
+    @bid = bid
+    mail(to:@user.email, subject: 'Confirmation Mail from MyAdvertisementPortal')
+  end
 end

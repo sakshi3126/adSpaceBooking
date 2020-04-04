@@ -70,6 +70,7 @@ class SlotsController < ApplicationController
   def confirm_booking
     if @slot.present? && @slot.status == "Free Slot"
       @slot.update_attributes(status: "Occupied Slot", user_id: current_user.id)
+      UserMailer.notification_email(@user, @slot).deliver_now!
     end
     redirect_to slots_path, notice: flash_message(@slot, action_name)
   end
@@ -77,8 +78,9 @@ class SlotsController < ApplicationController
 
   def approval
     if @slot.present?
-      @slot.update_attributes(status: "Occupied Slot", user_id: current_user.id)
+      @slot.update_attributes(status: "Occupied Slot", user_id: @slot.bid.user.id)
       @slot.bid.update_attributes(status: "Approved") if @slot.bid.present?
+      UserMailer.sent_for_approval(@slot.bid.user, @slot.bid).deliver_now!
     end
     redirect_to slots_path, notice: flash_message(@slot, action_name)
   end
@@ -87,6 +89,7 @@ class SlotsController < ApplicationController
     if @slot.present?
       @slot.update_attributes(status: "Cancelled", user_id: current_user.id)
       @slot.bid.update_attributes(status: "Rejected") if @slot.bid.present?
+      UserMailer.sent_for_approval(@slot.bid.user, @slot.bid).deliver_now!
     end
     redirect_to slots_path, notice: flash_message(@slot, action_name)
   end

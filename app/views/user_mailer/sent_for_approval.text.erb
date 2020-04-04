@@ -1,0 +1,10 @@
+Welcome to AddSpaceBooking Site, <%= @user.name %>
+===============================================
+
+You have successfully Created Slot,
+your Slot ID is: <%= @bid.slot.id %>
+Bid Status: <%= @bid.status %>
+Start Date is : <%= format_date_time_meridiem(@bid.slot.start_at) %>
+End Date is :<%= format_date_time_meridiem(@bid.slot.end_at) %>
+
+Thanks for joining and have a great day!
