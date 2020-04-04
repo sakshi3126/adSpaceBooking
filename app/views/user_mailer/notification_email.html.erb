@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html>
+<br>
 <head>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 </head>
-<body>
-<h1>Hi <%= @user.name %></h1>
-<p>
-  Sample mail sent using smtp.
-</p>
+<h5 class="text-center; font-size: 14.5px;">Welcome to AddSpaceBooking Site.</h5>
+<div class="font-family: Arial; color: #555; font-size: 14.5px">
+  <h6> Hi <%= @user.name %></h6></br>
+  <p>
+    You have successfully Created Slot. <br>
+    your Slot ID is: <%= @slot.id %>.<br>
+    Start Date is : <%= format_date_time_meridiem(@slot.start_at) %><br>
+    End Date is<%= format_date_time_meridiem(@slot.end_at) %><br>
+    Thanks for joining and have a great day!
+  </p>
+</div>
 </body>
 </html>

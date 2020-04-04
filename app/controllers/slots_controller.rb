@@ -30,10 +30,9 @@ class SlotsController < ApplicationController
   # POST /slots.json
   def create
     @slot = Slot.new(slot_params)
-
     respond_to do |format|
       if @slot.save
-        UserMailer.notification_email(@user).deliver_now!
+        UserMailer.notification_email(@user, @slot).deliver_now!
         format.html { redirect_to @slot, notice: 'Slot was successfully created.' }
         format.json { render :show, status: :created, location: @slot }
         @slot.save
