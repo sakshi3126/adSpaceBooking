@@ -32,11 +32,11 @@
               </h4>
               <div class="post-content">
                 <div class="posted-by">Posted by <%= slot.user.name %></div>
-                <h3><%= slot.title %></h3>
+                <h4>Slot Id: <%= slot.id %></h4>
                 <strong>Status:- </strong><span><em><%= slot.status %></em></span><br>
                 <strong>Amount:- </strong><span><em><%= slot.total_amount %></em></span><br>
-                <strong>start at:</strong><span><em><%= format_date_with_time(slot.start_at) %></em></span><br>
-                <strong>start at:</strong><span><em><%= format_date_with_time(slot.end_at) %></em></span><br>
+                <strong>start at:</strong><span><em><%= format_date_time_meridiem(slot.start_at) %></em></span><br>
+                <strong>start at:</strong><span><em><%= format_date_time_meridiem(slot.end_at) %></em></span><br>
                 <div class="text-center">
                   <% if current_user.role == "Organisation" && slot.status == "Pre Booked Slot" %>
                     <%= link_to "Bid Slot", new_bid_path(slot_id: slot.id), class: 'btn btn-primary' %>
