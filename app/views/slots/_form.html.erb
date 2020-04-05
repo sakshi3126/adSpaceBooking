@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
               <%= f.label :Status, class: "control-label" %>
-              <%= f.select :status, Slot.statuses.keys, {}, class: 'form-control' %>
+              <%= f.select :status, Slot.statuses.except('Pre Booked Slot', 'Bid Approval Pending','Cancelled').keys, {}, class: 'form-control' %>
             </div>
           </div>
           <div class="card-footer">
