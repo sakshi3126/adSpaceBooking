@@ -32,12 +32,12 @@
         <div class="form-row">
           <div class="col-sm-6">
             <strong>After Bid Total Amt.</strong>
-            <p><%= @bid.slot.total_amount %></p>
+            <p><%= @bid.slot.total_amount if @bid.slot.present? %></p>
           </div>
 
           <div class="col-sm-6">
             <strong>After Bid Total Amt.</strong>
-            <p><%= @bid.slot.bid_amount %></p>
+            <p><%= @bid.slot.bid_amount if @bid.slot.present?%></p>
           </div>
         </div>
       </div>

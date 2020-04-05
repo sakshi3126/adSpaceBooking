@@ -3,6 +3,8 @@ class Bid < ApplicationRecord
   belongs_to :user
   belongs_to :slot
 
+  validates_presence_of :amount
+
   enum statuses: {
       'Requested': 0,
       'Approved': 1,

@@ -33,7 +33,7 @@
     </li>
 
     <li>
-      <% if current_user.role == "Organisation" %>
+      <% if current_user.role == "Organisation" || current_user.role == "Space Agent" %>
         <%= link_to bids_path do %>
           <i class="fa fa-eye" aria-hidden="true"></i> View Bids
         <% end %>

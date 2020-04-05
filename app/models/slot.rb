@@ -21,7 +21,6 @@ class Slot < ApplicationRecord
       'Over': 5
   }
 
-
   # def start_at_uniq?
   #   if !id.present?
   #     date_uniq = Slot.all.pluck(:start_at)
@@ -32,10 +31,10 @@ class Slot < ApplicationRecord
   # end
 
   def update_slot_status
-      if self.start_at <=DateTime.now
-        self.update(status: 'Over')
+    if self.start_at <= DateTime.now
+      self.update(status: 'Over')
 
-      end
+    end
   end
 
   def start_at_uniq?
@@ -45,9 +44,10 @@ class Slot < ApplicationRecord
         date = date.strftime('%d-%b-%Y, %H')
         if (date == start_at.strftime('%d-%b-%Y, %H'))
           errors.add(:start_at, "#{start_at.strftime('%d-%b-%Y, %H %p')} already exists.")
-        elsif (end_at.strftime('%d-%b-%Y, %H') <= (start_at.strftime('%d-%b-%Y, %H') ))
+        elsif (end_at.strftime('%d-%b-%Y, %H') <= (start_at.strftime('%d-%b-%Y, %H')))
           errors.add(:start_at, "#{start_at.strftime('%d-%b-%Y, %H %p')} Can't be same  or greater than end at.")
-        else
+        elsif start_at < Time.now || start_at.to_s(:time) < Time.now.to_s(:time)
+          errors.add(:start_at, "#{start_at.strftime('%d-%b-%Y, %H %p')} Cannot be back dated.")
         end
       end
     end
@@ -78,9 +78,10 @@ class Slot < ApplicationRecord
       total_amount = 500
     end
   end
+
   def bid_amount
-    if self.total_time_in_hour != 0 && self.bids.present?
-      self.total_amount + self.bids.last.amount.round(2)
+    if self.bids.present? && self.total_time_in_hour != 0
+      self.total_amount + self.bids.last.amount
     end
   end
 end
