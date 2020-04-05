@@ -1,0 +1,21 @@
+#show-content {
+  height: calc(100vh - 50px);
+  background: white;
+
+  h3 {
+    text-align: center;
+  }
+  p {
+    margin: 20px 0;
+  }
+  .posted-by {
+    font-size: 12px;
+    font-size: 1.2rem;
+    margin: 20px 0;
+    color: rgba(0,0,0,0.5);
+  }
+}
+.bid-show{
+  margin-top: 7rem;
+  margin-bottom: 60px;
+}

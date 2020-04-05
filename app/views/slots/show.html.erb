@@ -1,6 +1,8 @@
-<div id="single-post-content" class="container">
+<div class="container">
   <div class="row">
-    <div class="col-sm-8 col-sm-offset-3">
+    <%= render 'shared/snippets/side_menu' %>
+    <div class="col-sm-10" id="show-content">
+    <div class="col-sm-10">
       <div class="posted-by"><strong>Booked by <%= @slot.user.name %></strong></div>
       <div class="col-sm-2">
         <strong>Name:</strong>
@@ -20,4 +22,5 @@
       </div>
     </div>
   </div><!-- row -->
+</div>
 </div>

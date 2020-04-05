@@ -1,18 +1,48 @@
 <div class="container">
-  <div class="form-row">
-    <div class="col-sm-8 col-sm-offset-3">
-      <ul class="list-group text-danger mb-3">
-        <li class="list-group-item">Slot has been went under Approval</li>
-      </ul>
-      <div class="col-sm-2">
-        <strong>Bid:</strong>
-        <p><%= @bid.id %></p>
+  <div class="row">
+    <%= render 'shared/snippets/side_menu' %>
+    <div class="col-sm-10" id="show-content">
+      <div class="bid-show">
+        <ul class="list-group text-danger text-center mb-3">
+          <li class="list-group-item">Slot has been went under Approval</li>
+        </ul>
       </div>
-      <div class="col-sm-2">
-        <strong>Status:</strong>
-        <p><%= @bid.status %></p>
+      <div class="row text-center">
+        <div class="form-row">
+          <div class="col-sm-6">
+            <strong>Bid:</strong>
+            <p><%= @bid.id %></p>
+          </div>
+          <div class="col-sm-6">
+            <strong>Status:</strong>
+            <p><%= @bid.status %></p>
+          </div>
+        </div><br>
+
+        <div class="form-row">
+          <div class="col-sm-6">
+            <strong>Slot Id:</strong>
+            <p><%= @bid.slot.id %></p>
+          </div>
+          <div class="col-sm-6">
+            <strong>Slot Amount:</strong>
+            <p><%= @bid.slot.status %></p>
+          </div>
+        </div><br>
+        <div class="form-row">
+          <div class="col-sm-6">
+            <strong>After Bid Total Amt.</strong>
+            <p><%= @bid.slot.total_amount %></p>
+          </div>
+
+          <div class="col-sm-6">
+            <strong>After Bid Total Amt.</strong>
+            <p><%= @bid.slot.bid_amount %></p>
+          </div>
+        </div>
       </div>
     </div>
-
   </div>
+
+</div>
 </div>

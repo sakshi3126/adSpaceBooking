@@ -1,36 +1,6 @@
 <div class="container">
   <div class="row">
-    <div id="side-menu" class="col-sm-2">
-      <ul id="links-list">
-        <li id="hobby">
-          <%= link_to occupied_slots_path do %>
-            <i class="fa fa-user-circle-o" aria-hidden="true"></i> Booked Slot
-          <% end %>
-        </li>
-
-        <li id="study">
-          <%= link_to free_slots_path do %>
-            <i class="fa fa-graduation-cap" aria-hidden="true"></i> Free Slot
-          <% end %>
-        </li>
-
-        <li id="team">
-          <%= link_to booked_slots_path do %>
-            <i class="fa fa-users" aria-hidden="true"></i> Pre Book Slot
-          <% end %>
-        </li>
-        <li>
-          <% if current_user.role == "Space Provider" %>
-            <%= link_to new_slot_path do %>
-              <i class="fa fa-cart-plus" aria-hidden="true"></i> Create Slot
-            <% end %>
-          <% end %>
-        </li>
-        <li>
-          <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn-btn-info'%>
-        </li>
-      </ul>
-    </div><!-- side-menu -->
+    <%= render 'shared/snippets/side_menu' %>
     <div id="main-content" class="col-sm-10">
       <h3 class="page-name">Occupied Slot</h3>
       <% @free_slot.each do |slot| %>
@@ -45,19 +15,12 @@
                 <h4>Slot Id: <%= slot.id %></h4>
                 <strong>Status:- </strong><span><em><%= slot.status %></em></span><br>
                 <strong>Amount:- </strong><span><em><%= slot.total_amount %></em></span><br>
+                <% if slot.bids.present? && slot.bid_amount.present? %>
+                  <strong>Bid Amt:- </strong><span><em><%= slot.bid_amount %></em></span><br>
+                <% end %>
                 <strong>start at:</strong><span><em><%= format_date_time_meridiem(slot.start_at) %></em></span><br>
                 <strong>End at:</strong><span><em><%= format_date_time_meridiem(slot.end_at) %></em></span><br>
-                <div class="text-center">
-                  <% if current_user.role == "Organisation" && slot.status == "Pre Booked Slot" %>
-                    <%= link_to "Bid Slot", new_bid_path(slot_id: slot.id), class: 'btn btn-primary' %>
-                  <% elsif (current_user.role == "Organisation" || current_user.role == "Space Agent") && slot.status == "Free Slot" %>
-                    <%= link_to "Book Slot", confirm_booking_slot_path(id: slot.id), class: 'btn btn-primary' %>
-                  <%elsif (current_user.role == "Space Agent" && slot.status == 'Bid Approval Pending') %>
-                    <%= link_to "Approve", slot_path(slot.id), class: 'btn btn-info' %>
-                  <% else %>
-
-                  <% end %>
-                </div>
+                <%= render 'shared/snippets/card_link_button', slot:slot%>
               </div>
             </div>
           </div><!-- card -->

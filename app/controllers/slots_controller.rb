@@ -4,11 +4,11 @@ class SlotsController < ApplicationController
   # GET /slots
   # GET /slots.json
   def index
-    if current_user.role == "Space Provider" || current_user.role == "Organisation"
-      @slots = Slot.all.order(created_at: :DESC)
-    else
-      current_user.role == "Space Agent"
-      @slots = Slot.where(status: ["Free Slot", 'Bid Approval Pending']).order(created_at: :DESC)
+    @slots = Slot.order(created_at: :DESC).each do |slot|
+      slot.update_slot_status
+    end
+    if current_user.role == "Space Agent"
+      @slots = Slot.where(status: ["Free Slot", 'Bid Approval Pending', 'Pre Booked Slot'])
     end
   end
 
@@ -32,6 +32,7 @@ class SlotsController < ApplicationController
     @slot = Slot.new(slot_params)
     respond_to do |format|
       if @slot.save
+        @slot.update_slot_status
         UserMailer.notification_email(@user, @slot).deliver_now!
         format.html { redirect_to @slot, notice: 'Slot was successfully created.' }
         format.json { render :show, status: :created, location: @slot }
@@ -48,6 +49,7 @@ class SlotsController < ApplicationController
   def update
     respond_to do |format|
       if @slot.update(slot_params)
+        @slot.update_slot_status
         format.html { redirect_to @slot, notice: 'Slot was successfully updated.' }
         format.json { render :show, status: :ok, location: @slot }
       else
@@ -117,11 +119,6 @@ class SlotsController < ApplicationController
     end
   end
 
-  def status_wise_button
-    respond_to do |format|
-      format.html { render partial: 'status_wise_button' }
-    end
-  end
 
   private
 

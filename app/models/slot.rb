@@ -1,7 +1,7 @@
 include DisplayHelper
 class Slot < ApplicationRecord
   belongs_to :user
-  has_one :bid, dependent: :destroy
+  has_many :bids, dependent: :destroy
 
   validates_presence_of :title
   validates_presence_of :status
@@ -17,7 +17,8 @@ class Slot < ApplicationRecord
       'Pre Booked Slot': 1,
       'Occupied Slot': 2,
       'Bid Approval Pending': 3,
-      'Cancelled': 4
+      'Cancelled': 4,
+      'Over': 5
   }
 
 
@@ -29,6 +30,13 @@ class Slot < ApplicationRecord
   #     end
   #   end
   # end
+
+  def update_slot_status
+      if self.start_at <=DateTime.now
+        self.update(status: 'Over')
+
+      end
+  end
 
   def start_at_uniq?
     if !id.present?
@@ -68,6 +76,11 @@ class Slot < ApplicationRecord
       total_amount = (self.total_time_in_hour * 1000).round(2)
     else
       total_amount = 500
+    end
+  end
+  def bid_amount
+    if self.total_time_in_hour != 0 && self.bids.present?
+      self.total_amount + self.bids.last.amount.round(2)
     end
   end
 end

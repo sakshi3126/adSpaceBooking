@@ -2,7 +2,11 @@ class BidsController < ApplicationController
   before_action :set_bid, only: [:show, :edit, :update, :destroy]
 
   def index
-
+    if current_user.role == "Organisation"
+    @bids = current_user.bids
+    elsif current_user.role == "Space Agent"
+      @bids = Bid.all
+    end
   end
 
   def show

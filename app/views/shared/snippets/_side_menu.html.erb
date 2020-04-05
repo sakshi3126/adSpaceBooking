@@ -1,0 +1,47 @@
+<div id="side-menu" class="col-sm-2">
+  <ul id="links-list">
+    <li id="home">
+      <%= link_to slots_path do %>
+        <i class="fa fa-home" aria-hidden="true"></i> Home Page
+      <% end %>
+    </li>
+    <li id="hobby">
+      <% if current_user.role != "Space Agent" %>
+        <%= link_to occupied_slots_path do %>
+          <i class="fa fa-book" aria-hidden="true"></i> Booked Slot
+        <% end %>
+      <% end %>
+    </li>
+
+    <li id="study">
+      <%= link_to free_slots_path do %>
+        <i class="fa fa-binoculars" aria-hidden="true"></i> Free Slot
+      <% end %>
+    </li>
+
+    <li id="team">
+      <%= link_to booked_slots_path do %>
+        <i class="fa fa-users" aria-hidden="true"></i> Pre Book Slot
+      <% end %>
+    </li>
+    <li>
+      <% if current_user.role == "Space Provider" %>
+        <%= link_to new_slot_path do %>
+          <i class="fa fa-cart-plus" aria-hidden="true"></i> Create Slot
+        <% end %>
+      <% end %>
+    </li>
+
+    <li>
+      <% if current_user.role == "Organisation" %>
+        <%= link_to bids_path do %>
+          <i class="fa fa-eye" aria-hidden="true"></i> View Bids
+        <% end %>
+      <% end %>
+    </li>
+    <div id="logout">
+      <i class="fa fa-sign-out"></i>
+      <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn-btn-info' %>
+    </div>
+  </ul>
+</div><!-- side-menu -->

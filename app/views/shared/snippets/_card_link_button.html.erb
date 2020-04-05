@@ -1,0 +1,18 @@
+<% if slot.present? %>
+  <div class="text-center" style="margin-top: 15px;">
+    <% if current_user.role == "Organisation" && (slot.status == "Pre Booked Slot" || slot.status == "Bid Approval Pending") %>
+      <%= link_to "Bid Slot", new_bid_path(slot_id: slot.id), class: 'btn btn-primary' %>
+    <% elsif (current_user.role == "Organisation" || current_user.role == "Space Agent") && slot.status == "Free Slot" %>
+      <%= link_to "Book Slot", confirm_booking_slot_path(slot.id), class: 'btn btn-primary' %>
+    <% elsif (current_user.role == "Space Agent" && slot.status == 'Bid Approval Pending') %>
+                    <span class="text-left">
+                    <%= link_to "Approve", approval_slot_path(slot.id), class: 'btn btn-info' %>
+                    </span>
+      <span class="text-right">
+                      <%= link_to "Reject", rejection_slot_path(slot.id), class: 'btn btn-info' %>
+                    </span>
+    <% else %>
+
+    <% end %>
+  </div>
+<% end %>
