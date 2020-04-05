@@ -1,5 +1,14 @@
 $(document).on('turbolinks:load', function() {
-    $("#successMessage").delay(5000).slideUp(300);
+    $("#successMessage").delay(5000).slideUp(300)
+
+    $('#user-settings').on('click', function () {
+        if($('.myprofile').hasClass('show')) {
+            $('.myprofile').removeClass('show')
+        } else {
+            $('.myprofile').addClass('show')
+        }
+    });
+
 
     if ($(".single-post-card").length) {
         // set a solid background color style

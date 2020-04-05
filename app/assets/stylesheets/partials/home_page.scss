@@ -48,3 +48,31 @@
     text-decoration: underline;
   }
 }
+#logout {
+  //height: 30px;
+  display: flex;
+  padding: 5px 15px;
+  margin: 2px 0;
+
+  i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    font-size: 17px;
+  }
+
+  a {
+    padding: 0 0 0 5px;
+    margin: 0;
+    color: black;
+  }
+}
+#logout:hover {
+  border-radius: 20px;
+  background: $navbarColor;
+
+  i, a{
+    color: white;
+  }
+}

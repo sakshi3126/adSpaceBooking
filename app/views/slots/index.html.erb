@@ -26,7 +26,10 @@
             <% end %>
           <% end %>
         </li>
-        <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn-btn-info'%>
+        <div id="logout">
+          <i class="fa fa-cart-plus"></i>
+          <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn-btn-info'%>
+        </div>
       </ul>
     </div><!-- side-menu -->
 
