@@ -1,5 +1,5 @@
 class SlotsController < ApplicationController
-  before_action :set_slot, only: [:show, :edit, :update, :destroy, :confirm_booking, :approval, :rejection]
+  before_action :set_slot, only: [:show, :edit, :update, :destroy, :confirm_booking]
 
   # GET /slots
   # GET /slots.json
@@ -76,27 +76,6 @@ class SlotsController < ApplicationController
     else
       @slot.update_attributes(status: "Occupied Slot", user_id: current_user.id)
       UserMailer.notification_email(@user, @slot).deliver_now!
-    end
-    redirect_to slots_path, notice: flash_message(@slot, action_name)
-  end
-
-
-  def approval
-    if @slot.present? && @slot.bids.present?
-      bid = @slot.bids.last
-      bid.update_attributes(status: "Approved")
-      @slot.update_attributes(status: "Occupied Slot", user_id: bid.user.id)
-      UserMailer.sent_for_approval(bid.user, bid).deliver_now!
-    end
-    redirect_to slots_path, notice: flash_message(@slot, action_name)
-  end
-
-  def rejection
-    if @slot.present? && @slot.bids.present?
-      bid = @slot.bids.last
-      bid.update_attributes(status: "Rejected")
-      @slot.update_attributes(status: "Pre Booked Slot", user_id: current_user.id)
-      UserMailer.sent_for_approval(bid.user,bid).deliver_now!
     end
     redirect_to slots_path, notice: flash_message(@slot, action_name)
   end

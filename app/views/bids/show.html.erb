@@ -14,7 +14,7 @@
             <p><%= @bid.id %></p>
           </div>
           <div class="col-sm-6">
-            <strong>Status:</strong>
+            <strong> Bid Status:</strong>
             <p><%= @bid.status %></p>
           </div>
         </div><br>
@@ -25,13 +25,13 @@
             <p><%= @bid.slot.id %></p>
           </div>
           <div class="col-sm-6">
-            <strong>Slot Amount:</strong>
+            <strong>Slot Status:</strong>
             <p><%= @bid.slot.status %></p>
           </div>
         </div><br>
         <div class="form-row">
           <div class="col-sm-6">
-            <strong>After Bid Total Amt.</strong>
+            <strong>Slot Amt.</strong>
             <p><%= @bid.slot.total_amount if @bid.slot.present? %></p>
           </div>
 

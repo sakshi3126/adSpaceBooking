@@ -33,5 +33,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :bids
+  resources :bids do
+    member do
+      get 'approval'
+      get 'rejection'
+    end
+  end
+
 end

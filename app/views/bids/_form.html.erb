@@ -4,7 +4,7 @@
       <%= simple_form_for(@bid, local: true) do |f| %>
         <div class="card">
           <div class="card-body">
-            <%= f.hidden_field :user_id, value: f.object.slot.user.id if f.object.slot.present? %>
+            <%= f.hidden_field :user_id, value: current_user.id if current_user.present? %>
             <%= f.hidden_field :slot_id %>
             <%= f.hidden_field :bid_by, value: current_user.id if current_user.present? %>
             <%= render 'shared/snippets/form_errors', f: f %>
@@ -40,7 +40,7 @@
               </div>
             </div>
             <div class="form-group">
-              <%= f.label 'Bid Amount', class: "control-label" %>
+              <%= f.label 'Bid Amount', class: "control-label", placeholder: 'This amt will be added with Slot Amt' %>
               <%= f.text_field :amount, required: true, class: "form-control" %>
             </div>
 

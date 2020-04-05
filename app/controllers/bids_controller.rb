@@ -1,15 +1,36 @@
 class BidsController < ApplicationController
-  before_action :set_bid, only: [:show, :edit, :update, :destroy]
+  before_action :set_bid, only: [:show, :edit, :update, :destroy, :approval, :rejection]
 
   def index
     if current_user.role == "Organisation"
-    @bids = current_user.bids
+      @bids = current_user.bids
     elsif current_user.role == "Space Agent"
       @bids = Bid.all
+      @bids.each do |bid|
+        valid_data = (bid.slot.status == 'Bid Approval Pending' && bid.status != "Rejected")
+      end
     end
   end
 
   def show
+  end
+
+  def approval
+    if @bid.present?
+      @bid.update_attributes(status: "Approved", user_id: @bid.user.id)
+      @bid.slot.update_attributes(status: "Occupied Slot") if @bid.slot.present?
+      UserMailer.sent_for_approval(@bid.user, @bid).deliver_now!
+    end
+    redirect_to bids_path, notice: flash_message(@bid, action_name)
+  end
+
+  def rejection
+    if @bid.present?
+      @bid.update_attributes(status: "Rejected")
+      @bid.slot.update_attributes(status: "Pre Booked Slot") if @bid.slot.present?
+      UserMailer.sent_for_approval(@bid.user, @bid).deliver_now!
+    end
+    redirect_to bids_path, notice: flash_message(@bid, action_name)
   end
 
   def new
